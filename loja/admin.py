@@ -4,6 +4,13 @@ from .models import *
 
 class FabricanteAdmin(admin.ModelAdmin):
     date_hierarchy = 'criado_em'
+    search_fields = ('fabricante', )
+
+
+class CategoriaAdmin(admin.ModelAdmin):
+    date_hierarchy = 'criado_em'
+    search_fields = ("categoria",)
+
 
 class ImageAdmin(admin.ModelAdmin):
     def image_tag(self, obj):
@@ -13,7 +20,6 @@ class ImageAdmin(admin.ModelAdmin):
 class ProdutoAdmin(admin.ModelAdmin):
     readonly_fields = ['img_preview']
     date_hierarchy = 'criado_em'
-    empty_value_display = 'Vazio'
     search_fields = ('produto',)
 
     
@@ -21,8 +27,10 @@ class ProdutoAdmin(admin.ModelAdmin):
         return format_html('<img src="{}" style="max-width:200px; max-height:200px"/>'.format(obj.image.url))
 
     list_display = ('produto', 'img_preview', 'destaque', 'promocao', 'msgPromocao', 'preco', 'categoria',)
+    empty_value_display = "Sem promoção"
+    search_fields = ('produto', )
 
 admin.site.register(Fabricante, FabricanteAdmin) 
-admin.site.register(Categoria) 
+admin.site.register(Categoria, CategoriaAdmin) 
 admin.site.register(Produto, ProdutoAdmin)
 
