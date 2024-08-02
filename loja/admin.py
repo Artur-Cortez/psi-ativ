@@ -27,7 +27,7 @@ class ProdutoAdmin(admin.ModelAdmin):
         return format_html('<img src="{}" style="max-width:200px; max-height:200px"/>'.format(obj.image.url))
 
     list_display = ('produto', 'img_preview', 'destaque', 'promocao', 'msgPromocao', 'preco', 'categoria',)
-    empty_value_display = "Sem promoção"
+    empty_value_display = "Vazio"
     search_fields = ('produto', )
 
 admin.site.register(Fabricante, FabricanteAdmin) 

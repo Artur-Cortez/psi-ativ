@@ -11,28 +11,43 @@ def list_produto_view(request, id=None):
     categoria = request.GET.get("categoria")
     fabricante = request.GET.get("fabricante")
     dias = request.GET.get("dias")
+    id = request.GET.get("id")
 
     produtos = Produto.objects.all()
+    print(produtos)
 
     if dias is not None:
         now = timezone.now()
         now = now - timedelta(days = int(dias))
         produtos = produtos.filter(criado_em__gte=now)
     if produto is not None:
+        print(produto)
         produtos = produtos.filter(Produto=produto)
+        print(produtos)
     if promocao is not None:
+        print(promocao)
         produtos = produtos.filter(promocao=promocao)
+        print(produtos)
     if destaque is not None:
+        print(destaque)
         produtos = produtos.filter(destaque=destaque)
+        print(produtos)
     if categoria is not None:
-        produtos = produtos.filter(categoria__Categoria=categoria)
+        print(categoria)
+        produtos = produtos.filter(categoria__categoria=categoria)
+        print(produtos)
     if fabricante is not None:
-        produtos = produtos.filter(fabricante__Fabricante=fabricante)
+        print(fabricante)
+        produtos = produtos.filter(fabricante__fabricante=fabricante)
+        print(produtos)
     if id is not None:
+        print(id)
         produtos = produtos.filter(id=id)
+
+    if produtos != None:
+        for produto in produtos:
+            return HttpResponse(produto)
+    else:
+        return HttpResponse("Trem não encontrado")
     
-
-
-    if id is None:
-        return HttpResponse('<h1>Nenhum id foi informado</h1>')
-    return HttpResponse('<h1>Produto de id %s!</h1>' % id)
+   
