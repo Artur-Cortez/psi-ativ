@@ -3,6 +3,9 @@ from loja.models import Produto
 from datetime import timedelta, datetime
 from django.utils import timezone
 
+from django.shortcuts import render 
+from loja.models import Produto
+
 def list_produto_view(request, id=None):
 
     produto = request.GET.get("produto")
@@ -11,7 +14,7 @@ def list_produto_view(request, id=None):
     categoria = request.GET.get("categoria")
     fabricante = request.GET.get("fabricante")
     dias = request.GET.get("dias")
-    id = request.GET.get("id")
+    
 
     produtos = Produto.objects.all()
     print(produtos)
@@ -40,14 +43,21 @@ def list_produto_view(request, id=None):
         print(fabricante)
         produtos = produtos.filter(fabricante__fabricante=fabricante)
         print(produtos)
+
+    if dias is not None:
+        now = timezone.now()
+        now = now - timedelta(days = int(dias))
+        produtos = produtos.filter(criado_em__gte=now)
+
     if id is not None:
         print(id)
         produtos = produtos.filter(id=id)
 
-    if produtos != None:
-        for produto in produtos:
-            return HttpResponse(produto)
-    else:
-        return HttpResponse("Trem não encontrado")
+      
+    context = {
+        'produtos': produtos
+    }
+
+    return render(request, template_name='produto/produto.html', context=context, status=200)
     
    
