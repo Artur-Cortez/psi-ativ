@@ -14,19 +14,20 @@ def login_view(request):
         loginForm = LoginForm(request.POST)
         if loginForm.is_valid():
             user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
-            _next = request.GET.get('next')
-            if _next is not None:
-                return redirect(_next)
+            if user is not None:
+                login(request, user)
+                _next = request.GET.get('next')
+                if _next is not None:
+                    return redirect(_next)
+                else:
+                    return redirect("/")
             else:
-                return redirect("/")
+                message = {'type': 'danger', 'text': 'Dados de usuário incorretos'}
         else:
-            message = {'type': 'danger', 'text': 'Dados de usuário incorretos'}
-            context = {'form': loginForm, 'message': message,'title': 'Login', 'button_text': 'Entrar', 'link_text': 'Registrar', 'link_href': '/register'}
+            message = {'type': 'danger', 'text': 'Formulário inválido'}
 
-        return render(request, template_name='auth/auth.html', context=context, status=200)
-    
+    context = {'form': loginForm, 'message': message, 'title': 'Login', 'button_text': 'Entrar', 'link_text': 'Registrar', 'link_href': '/register'}
+    return render(request, template_name='auth/auth.html', context=context, status=200)
 
 def register_view(request):
     registerForm = RegisterForm()
