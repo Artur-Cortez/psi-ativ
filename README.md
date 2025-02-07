@@ -1,3 +1,2 @@
-# psi-ativ
-
-## Eu sou danado e tô usando django 5.0
+# django-project
+repositório do projeto django psi

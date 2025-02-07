@@ -17,13 +17,17 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_ROOT=os.path.join(BASE_DIR, 'static')
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--@q81ap$%h#3fqqot15-2z@s4%g%d9je=$o5#a6l&^a+ilbq1y'
+SECRET_KEY = 'django-insecure-=$z45#oge0&lsp!s43f490!)_oe-y99jrd-3oi!*)p4n5m($n5'
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -122,3 +126,8 @@ MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_URL = '/logout'
+LOGOUT_REDIRECT_URL = '/login'

@@ -1,37 +1,20 @@
 from django.contrib import admin
-from django.utils.html import format_html
-from .models import * 
-
+# Register your models here.
+from .models import *
 class FabricanteAdmin(admin.ModelAdmin):
+    # Cria um filtro de hierarquia com datas
     date_hierarchy = 'criado_em'
-    search_fields = ('fabricante', )
-
-
+    search_fields = ('Fabricante',)
+admin.site.register(Fabricante, FabricanteAdmin)
 class CategoriaAdmin(admin.ModelAdmin):
+    # Cria um filtro de hierarquia com datas
     date_hierarchy = 'criado_em'
-    search_fields = ("categoria",)
-
-
-class ImageAdmin(admin.ModelAdmin):
-    def image_tag(self, obj):
-        return format_html('<img src="{}" style="max-width:200px; max-height:200px"/>'.format(obj.image.url))
-    list_display = ['name','image_tag',]
-
+    search_fields = ('Categoria',)
+admin.site.register(Categoria, CategoriaAdmin)
 class ProdutoAdmin(admin.ModelAdmin):
-    readonly_fields = ['img_preview']
     date_hierarchy = 'criado_em'
-    search_fields = ('produto',)
-
-    
-    def image_tag(self, obj):
-        return format_html('<img src="{}" style="max-width:200px; max-height:200px"/>'.format(obj.image.url))
-
-    list_display = ('produto', 'img_preview', 'destaque', 'promocao', 'msgPromocao', 'preco', 'categoria',)
-    empty_value_display = "Vazio"
-    search_fields = ('produto', )
-
-admin.site.register(Fabricante, FabricanteAdmin) 
-admin.site.register(Categoria, CategoriaAdmin) 
+    list_display = ('Produto', 'destaque', 'promocao', 'msgPromocao', 'preco', 'categoria',)
+    empty_value_display = 'Vazio'
+    search_fields = ('Produto',)
 admin.site.register(Produto, ProdutoAdmin)
 admin.site.register(Usuario)
-
