@@ -1,2 +1,2 @@
 # django-project
-repositório do projeto django psi
+repositório radingal do trabalho django da disciplina de programação de sistemas para internet.
