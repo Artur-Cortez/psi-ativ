@@ -7,6 +7,8 @@ from django.dispatch import receiver
 from .fabricante import Fabricante
 from .produto import Produto
 from .categoria import Categoria
+from .carrinho import Carrinho
+from .carrinho import CarrinhoItem
 
 PERFIL = (
     (1, 'Admin'),
