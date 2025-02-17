@@ -1,4 +1,6 @@
-from loja.models import *
+from django.db import models
+from .categoria import Categoria
+from .fabricante import Fabricante
 
 class Produto(models.Model):
     Produto = models.CharField(null=False, max_length=100)

@@ -1,4 +1,4 @@
-from loja.models import *
+from django.db import models
 
 class Fabricante(models.Model):
   Fabricante = models.CharField(null=False, max_length=100)

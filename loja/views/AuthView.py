@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from loja.forms.AuthForm import LoginForm, RegisterForm
+from django.contrib.auth.models import User
 
 def logout_view(request):
     logout(request)
@@ -29,7 +30,7 @@ def login_view(request):
                     return redirect(_next)
                 else:
                     return redirect("/")
-                return redirect('/')
+                
             else:
                 message = {'type': 'danger', 'text': 'Dados de usuário incorretos'}
 

@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from loja.models.Usuario import Usuario
+from loja.models import Usuario
 # Adicione a linha a seguir no import
 from django.contrib.auth.models import User
 # Adicione esse trecho antes da classe meta

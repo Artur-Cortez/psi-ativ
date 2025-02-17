@@ -8,22 +8,68 @@
     <div class="container-fluid">
         <div class="row">
             <form class="col-md-4 col-lg-4 offset-md-4 offset-lg-4" method="POST" action="">
-                <h3 class="text-center">{{title}}</h3>
-                {% if message is not None %}
-                <div class="alert alert-{{ message.type }}">{{ message.text }}</div>
-                {% endif %}
-                {% csrf_token %}
-                {% for f in form %}
-                <div class="form-group">
-                    {{ f.label }}
-                    {{ f }}
-                    {% for error in f.errors %}
-                    <div class="invalid-feedback" style="display: initial;">{{ error }}</div>
-                    {% endfor %}
-                </div>
-                {% endfor %}
-                <a href="{{link_href}}" style="display: block; text-align: center; margin-bottom:20px;">{{link_text}}</a>
-                <button type="submit" class="btn btn-primary">{{button_text}}</button>
+                    {% if 'password_reset' in request.path %}
+                        {% if 'complete' in request.path %}
+                            <h3 class="text-center">Senha Alterada!</h3>
+                            <div class="alert alert-success">Sua senha foi alterada com sucesso!</div>
+                            <a href="{% url 'login' %}" class="btn btn-primary btn-block">Fazer Login</a>
+                        {% elif 'done' in request.path %}
+                            <h3 class="text-center">E-mail Enviado</h3>
+                            <div class="alert alert-info">
+                                Enviamos um e-mail com instruções para redefinir sua senha. 
+                                Verifique sua caixa de entrada.
+                            </div>
+                            <a href="{% url 'login' %}" class="btn btn-primary btn-block">Voltar ao Login</a>
+                        {% elif 'confirm' in request.path %}
+                            <h3 class="text-center">Nova Senha</h3>
+                            {% if validlink %}
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" class="btn btn-primary btn-block">Alterar Senha</button>
+                            {% else %}
+                                <div class="alert alert-danger">
+                                    O link de redefinição de senha é inválido ou já foi usado.
+                                </div>
+                                <a href="{% url 'password_reset' %}" class="btn btn-primary btn-block">
+                                    Solicitar novo link
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <h3 class="text-center">Recuperar Senha</h3>
+                            <p class="text-center">Digite seu e-mail para receber as instruções de recuperação.</p>
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+                            <a href="{% url 'login' %}" style="display: block; text-align: center; margin-top:20px;">
+                                Voltar ao Login
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <h3 class="text-center">{{title}}</h3>
+                        {% if message is not None %}
+                            <div class="alert alert-{{ message.type }}">{{ message.text }}</div>
+                        {% endif %}
+                        {% csrf_token %}
+                        {% for f in form %}
+                            <div class="form-group">
+                                {{ f.label }}
+                                {{ f }}
+                                {% for error in f.errors %}
+                                    <div class="invalid-feedback" style="display: initial;">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+
+                        {% if title == 'Login' %}
+                            <a href="{% url 'password_reset' %}" style="display: block; text-align: center; margin-bottom:20px;">
+                                Esqueceu a senha?
+                            </a>
+                        {% endif %}
+                        <a href="{{link_href}}" style="display: block; text-align: center; margin-bottom:20px;">
+                            {{link_text}}
+                        </a>
+                        <button type="submit" class="btn btn-primary">{{button_text}}</button>
+                    {% endif %}
             </form>
         </div>
     </div>
